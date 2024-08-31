@@ -1,5 +1,5 @@
 <?php
-// include '../conexao.php';
+include '../conexao.php';
 $acao = isset($_GET['acao']) ? $_GET['acao'] : null;
 
 if ($acao == 'agendar') {
@@ -12,7 +12,7 @@ if ($acao == 'agendar') {
 
     $pegaHora = "select * from horarios where id = $idHora";
     $sqlhora = pg_query($conn, $pegaHora);
-    $resultadoHorario =  mysqli_fetch_assoc($sqlhora);
+    $resultadoHorario =  pg_fetch_assoc($sqlhora);
     $hora = $resultadoHorario['hora'];
 
     //verifica se ja existe agendamento para o usuário

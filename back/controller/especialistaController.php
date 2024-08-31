@@ -1,5 +1,5 @@
 <?php
-// include '../conexao.php';
+include '../conexao.php';
 $acao = isset($_GET['acao']) ? $_GET['acao'] : null;
 
 if ($acao == 'cadastraOuEditaEspecialista') {
