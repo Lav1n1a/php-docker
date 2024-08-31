@@ -4,6 +4,10 @@
 </div>
 
 <script>
+  function abrirModalAgendamento(id, modalId) {
+    document.getElementById(modalId).value = id;
+  }
+
   function abrirModalEspecialista(id, modalId) {
     document.getElementById(modalId).value = id;
   }

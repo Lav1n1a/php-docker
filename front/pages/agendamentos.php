@@ -22,7 +22,7 @@
                     LEFT JOIN especialidades e ON e.id = a.especialidade
                     LEFT JOIN usuarios u ON u.id = a.id_usuario
                     LEFT JOIN status s ON s.id = a.status";
-    } elseif ($perfilId == 2) {
+    } else if ($perfilId == 2) {
     ?>
     <?php
         $sqlRegistros = "SELECT a.id AS id, a.id_usuario, TO_CHAR(a.data, 'DD/MM/YYYY') AS data, a.hora AS hora, e.nome, u.email AS email, 
