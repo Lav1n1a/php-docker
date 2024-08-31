@@ -99,7 +99,7 @@
     <?php
     } else {
         echo '
-            <div class="alert alert-danger">
+            <div class="alert alert-danger alert-dismissible">
                 <h5><i class="icon fas fa-ban"></i> Sem dados!</h5>
             </div>
             ';
