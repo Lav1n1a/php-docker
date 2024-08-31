@@ -99,7 +99,7 @@
     <?php
     } else {
         echo '
-            <div class="alert alert-danger alert-dismissible">
+            <div class="alert alert-danger">
                 <h5><i class="icon fas fa-ban"></i> Sem dados!</h5>
             </div>
             ';
@@ -181,4 +181,4 @@
     </div>
 </div>
 
-<?php include('includes/footer.php') ?>
+<?php include('./includes/footer.php') ?>
