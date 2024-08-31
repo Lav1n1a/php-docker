@@ -1,9 +1,8 @@
-<?php session_start(); 
-
+<?php 
 include __DIR__ . '/../back/conexao.php';
 include __DIR__ . '/../back/validaSessao.php';
 
- ?>
+?>
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -51,27 +50,26 @@ include __DIR__ . '/../back/validaSessao.php';
 
             <?php
             $sqlMenu = "SELECT *,
-            menu.nome as menu_nome,
-            menu.link as menu_link,
-            menu.icon as menu_icon
-            FROM perfil_menu as pm
-            LEFT JOIN menu on menu.id = pm.menu_id 
-            WHERE pm.perfil_id = $perfilId";
+          menu.nome AS menu_nome,
+          menu.link AS menu_link,
+          menu.icon AS menu_icon
+          FROM perfil_menu AS pm
+          LEFT JOIN menu ON menu.id = pm.menu_id 
+          WHERE pm.perfil_id = $perfilId";
 
-            $sqlMenuDados = mysqli_query($conn, $sqlMenu);
+            $sqlMenuDados = pg_query($conn, $sqlMenu);
 
             if (!$sqlMenuDados) {
-              die("Erro na consulta SQL: " . mysqli_error($conn));
+              die("Erro na consulta SQL: " . pg_last_error($conn));
             }
 
-            while ($row = mysqli_fetch_assoc($sqlMenuDados)) {
+            while ($row = pg_fetch_assoc($sqlMenuDados)) {
             ?>
               <li class="nav-item" style="margin-left: 6px; font-size: 17px;">
-                  <a href="<?php echo $row['menu_link']; ?>" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-th"></i> -->
-                  <i class=" <?php echo $row['menu_icon']; ?>"></i>
+                <a href="<?php echo htmlspecialchars($row['menu_link'], ENT_QUOTES, 'UTF-8'); ?>" class="nav-link">
+                  <i class="<?php echo htmlspecialchars($row['menu_icon'], ENT_QUOTES, 'UTF-8'); ?>"></i>
                   <p>
-                    <?php echo $row['menu_nome']; ?>
+                    <?php echo htmlspecialchars($row['menu_nome'], ENT_QUOTES, 'UTF-8'); ?>
                   </p>
                 </a>
               </li>

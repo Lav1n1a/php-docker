@@ -16,7 +16,7 @@ if ($acao == 'cadastraOuEditaEspecialista') {
         ('$email', '$senha', '$perfilEspecialidade')";
 
 
-        if (mysqli_query($conn, $sql)) { // retorna se o insert deu certo
+        if (pg_query($conn, $sql)) { // retorna se o insert deu certo
             echo "<script> alert('Especialista cadastrado com sucesso!')
                 window.location.href = '../../front/pages/especialistas.php'
                 </script>";
@@ -31,7 +31,7 @@ if ($acao == 'cadastraOuEditaEspecialista') {
 
         $sql = "UPDATE usuarios SET email='$email', senha='$senha', perfil_id='$perfilEspecialidade' WHERE id = $id";
 
-        if (mysqli_query($conn, $sql)) {
+        if (pg_query($conn, $sql)) {
             echo "<script> alert('Especialista editado com sucesso!')
             window.location.href = '../../front/pages/especialistas.php'
             </script>";

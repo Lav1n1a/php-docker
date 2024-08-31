@@ -3,49 +3,45 @@
 include __DIR__ . '/../back/conexao.php';
 
 $acao = isset($_GET['acao']) ? $_GET['acao'] : null;
-$msg = isset($_GET['msg']) ? $_GET['msg'] : null;
-$tipoMsg = isset($_GET['tipo']) ? $_GET['tipo'] : null;
+
 
 if ($acao == 'cadastrar') {
 
     $senha = md5($_POST['senha']);
-    $email = $_POST['email'];
+    $email = pg_escape_string($conn, $_POST['email']);
     $perfilId = 2;
 
     if ($_POST['senha'] && $_POST['email']) {
 
-        $validaEmail = "SELECT * FROM `usuarios`  WHERE email = '$email'";
+        // Verifique se o email já está em uso
+        $validaEmail = "SELECT * FROM usuarios WHERE email = '$email'";
 
-        $result = mysqli_query($conn, $validaEmail);
+        $result = pg_query($conn, $validaEmail);
 
-        if (mysqli_num_rows($result) > 0) {
-
+        if (pg_num_rows($result) > 0) {
             echo "<script>
-        alert('Email já utilizado!')
-        window.location.href = 'cadastro.php'
-        </script> ";
+                alert('Email já utilizado!');
+                window.location.href = 'cadastro.php';
+            </script>";
         } else {
+            // Insira um novo usuário
+            $sql = "INSERT INTO usuarios (email, senha, perfil_id) VALUES ('$email', '$senha', $perfilId)";
 
-            $sql = "INSERT INTO `usuarios` (`email`, `senha`, `perfil_id`) VALUES ('$email', '$senha', '$perfilId')";
-
-            if (mysqli_query($conn, $sql)) {
-
+            if (pg_query($conn, $sql)) {
                 echo "<script>
-            alert('Usuário criado com sucesso!')
-            window.location.href = 'cadastro.php'
-            </script> ";
+                    alert('Usuário criado com sucesso!');
+                    window.location.href = 'cadastro.php';
+                </script>";
             } else {
-                echo "Erro ao cadastrar usuário:" . mysqli_error($conn);
+                echo "Erro ao cadastrar usuário: " . pg_last_error($conn);
             }
         }
+    } else {
         echo "<script>
-    alert('Valor inválido!')
-    window.location.href = 'cadastro.php'
-    </script> ";
+            alert('Valor inválido!');
+            window.location.href = 'cadastro.php';
+        </script>";
     }
-}
-if ($msg) {
-    echo $msg;
 }
 ?>
 

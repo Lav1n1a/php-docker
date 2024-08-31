@@ -7,7 +7,7 @@
         <?php
         $queryEspecialidades = "SELECT * from especialidades";
 
-        $especialidades = mysqli_query($conn, $queryEspecialidades);
+        $especialidades = pg_query($conn, $queryEspecialidades);
 
         while ($dadosEspecialidades = mysqli_fetch_assoc($especialidades)) {
         ?>
@@ -43,7 +43,7 @@
         <?php
         $queryHorarios = "SELECT * from horarios";
 
-        $horarios = mysqli_query($conn, $queryHorarios);
+        $horarios = pg_query($conn, $queryHorarios);
 
         while ($dadoshorarios = mysqli_fetch_assoc($horarios)) {
         ?>

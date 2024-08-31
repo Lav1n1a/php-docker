@@ -43,9 +43,9 @@
                         WHERE pe.id_perfil = $perfilId AND s.id != 3";
     }
 
-    $dadosRegistros = mysqli_query($conn, $sqlRegistros);
+    $dadosRegistros = pg_query($conn, $sqlRegistros);
 
-    if (mysqli_num_rows($dadosRegistros) > 0) {
+    if (pg_num_rows($dadosRegistros) > 0) {
     ?>
         <div class="card">
             <table class="table">
@@ -65,7 +65,7 @@
 
                     <?php
 
-                    while ($dadosAgendamentos = mysqli_fetch_assoc($dadosRegistros)) {
+                    while ($dadosAgendamentos = pg_fetch_assoc($dadosRegistros)) {
                         $idAgendamento = $dadosAgendamentos['id'];
                         $statusColor = getStatusColor($dadosAgendamentos['codigo_status']);
 

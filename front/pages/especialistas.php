@@ -5,14 +5,14 @@
     <button class="btn btn-success" style="width: 100px; margin: 7px 0px;" data-bs-toggle="modal" data-bs-target="#cadastraOuEditaEspecialista" onclick="abrirModalEspecialista()"><i class="fas fa-plus"></i> Novo</button>
 
     <?php
-    $sqlEspecialistas = "SELECT u.id as id, u.email as email, u.id as idUsuario,p.nome as perfilNome
-                                FROM usuarios as u
-                                LEFT JOIN perfil p ON p.id = u.perfil_id
-                                WHERE u.perfil_id != 2 AND u.perfil_id != 1";
+    $sqlEspecialistas = "SELECT u.id AS id, u.email AS email, u.id AS idUsuario, p.nome AS perfilNome
+  FROM usuarios AS u
+  LEFT JOIN perfil p ON p.id = u.perfil_id
+  WHERE u.perfil_id != 2 AND u.perfil_id != 1";
 
-    $dadosEspecialistas = mysqli_query($conn, $sqlEspecialistas);
+    $dadosEspecialistas = pg_query($conn, $sqlEspecialistas);
 
-    if (mysqli_num_rows($dadosEspecialistas) > 0) {
+    if ($dadosEspecialistas && pg_num_rows($dadosEspecialistas) > 0) {
     ?>
         <div class="card">
             <table class="table">
@@ -26,14 +26,13 @@
                 </thead>
                 <tbody>
                     <?php
-                    while ($especialista = mysqli_fetch_assoc($dadosEspecialistas)) {
-                        $id = $especialista['idUsuario'];
+                    while ($especialista = pg_fetch_assoc($dadosEspecialistas)) {
+                        $id = htmlspecialchars($especialista['idUsuario'], ENT_QUOTES, 'UTF-8');
                     ?>
-
                         <tr>
-                            <td style="text-align:center;"><?php echo $especialista['id']; ?></td>
-                            <td style="text-align:center;"><?php echo $especialista['email']; ?></td>
-                            <td style="text-align:center;"><?php echo $especialista['perfilNome']; ?></td>
+                            <td style="text-align:center;"><?php echo htmlspecialchars($especialista['id'], ENT_QUOTES, 'UTF-8'); ?></td>
+                            <td style="text-align:center;"><?php echo htmlspecialchars($especialista['email'], ENT_QUOTES, 'UTF-8'); ?></td>
+                            <td style="text-align:center;"><?php echo htmlspecialchars($especialista['perfilNome'], ENT_QUOTES, 'UTF-8'); ?></td>
                             <td style="text-align:center;">
                                 <i class="fas fa-edit" onclick="abrirModalEspecialista('<?php echo $id; ?>', 'idEditar')" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#cadastraOuEditaEspecialista"></i>
                             </td>
@@ -90,9 +89,9 @@
                             $queryPerfilEspecialidades = "SELECT * from perfil
                             WHERE id != 1 AND id != 2";
 
-                            $perfilEspecialidades = mysqli_query($conn, $queryPerfilEspecialidades);
+                            $perfilEspecialidades = pg_query($conn, $queryPerfilEspecialidades);
 
-                            while ($dadosEspecialidades = mysqli_fetch_assoc($perfilEspecialidades)) {
+                            while ($dadosEspecialidades = pg_fetch_assoc($perfilEspecialidades)) {
                             ?>
                                 <option value=<?php echo $dadosEspecialidades['id'] ?>><?php echo $dadosEspecialidades['nome'] ?></option>
                             <?php

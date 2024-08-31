@@ -11,7 +11,7 @@ if ($acao == 'agendar') {
     $data = $_POST['data'];
 
     $pegaHora = "select * from horarios where id = $idHora";
-    $sqlhora = mysqli_query($conn, $pegaHora);
+    $sqlhora = pg_query($conn, $pegaHora);
     $resultadoHorario =  mysqli_fetch_assoc($sqlhora);
     $hora = $resultadoHorario['hora'];
 
@@ -20,17 +20,17 @@ if ($acao == 'agendar') {
     FROM agendamentos 
     WHERE id_usuario = '$idUsuario' AND status = 1";
 
-    $agendamentoAtivo = mysqli_query($conn, $sqlAgendamentoAtivo);
+    $agendamentoAtivo = pg_query($conn, $sqlAgendamentoAtivo);
 
-    if (mysqli_num_rows($agendamentoAtivo) == 0) {
+    if (pg_num_rows($agendamentoAtivo) == 0) {
 
         $validaHorario = "select * from agendamentos where especialidade = '$idEspecialidade'
     and data = '$data' and hora = '$hora'";
 
-        $sqlValidaHorario = mysqli_query($conn, $validaHorario);
+        $sqlValidaHorario = pg_query($conn, $validaHorario);
 
          //Se não existir agendamento ativo, verifica se já existe agendamento do mesmo horário e especialidade
-        if (mysqli_num_rows($sqlValidaHorario) > 0) {
+        if (pg_num_rows($sqlValidaHorario) > 0) {
             echo "<script>
         alert('Desculpe, este horário já está ocupado. Por favor, escolha outro horário.');
         window.location.href = '../../front/pages/home.php'
@@ -40,7 +40,7 @@ if ($acao == 'agendar') {
             //Caso horário esteja livre, insere no banco
             $sql = "INSERT INTO `agendamentos` (`id_usuario`,  `email`, `especialidade`,  `data`, `hora`, `status`) VALUES ($idUsuario, '$email','$idEspecialidade', '$data', '$hora', '1')";
 
-            if (mysqli_query($conn, $sql)) {
+            if (pg_query($conn, $sql)) {
 
                 echo "<script> alert('Agendado com sucesso!') 
             window.location.href = '../../front/pages/home.php'
@@ -71,11 +71,11 @@ if ($acao == 'cancelarAgendamento') {
 
     $sqlPegaSeStatusFinalizado = "select * from agendamentos where id = $id and status = 2";
 
-    $valida = mysqli_query($conn, $sqlPegaSeStatusFinalizado);
+    $valida = pg_query($conn, $sqlPegaSeStatusFinalizado);
 
-    if (mysqli_num_rows($valida) == 0) {
+    if (pg_num_rows($valida) == 0) {
 
-        if (mysqli_query($conn, $sql)) {
+        if (pg_query($conn, $sql)) {
             echo "<script>
             alert('Agendamento cancelado!')
             window.location.href = '../../front/pages/agendamentos.php'
@@ -100,13 +100,13 @@ if ($acao == 'finalizarAgendamento') {
 
     $sqlPegaSeStatusCancelado = "select * from agendamentos where id = $id and status = 3";
 
-    $valida = mysqli_query($conn, $sqlPegaSeStatusCancelado);
+    $valida = pg_query($conn, $sqlPegaSeStatusCancelado);
 
-    if (mysqli_num_rows($valida) == 0) {
+    if (pg_num_rows($valida) == 0) {
 
         $sql = "UPDATE agendamentos SET status='$status' WHERE id=$id";
 
-        if (mysqli_query($conn, $sql)) {
+        if (pg_query($conn, $sql)) {
             echo "<script>
            alert('Agendamento finalizado!')
             window.location.href = '../../front/pages/agendamentos.php'

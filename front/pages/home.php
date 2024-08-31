@@ -56,9 +56,9 @@
                         $sqlAgendamentoAtivo = " SELECT * FROM agendamentos
                     WHERE id_usuario = $id AND status = 1";
 
-                        $horarioAtivo = mysqli_query($conn, $sqlAgendamentoAtivo);
+                        $horarioAtivo = pg_query($conn, $sqlAgendamentoAtivo);
 
-                        if (mysqli_num_rows($horarioAtivo) > 0) {
+                        if (pg_num_rows($horarioAtivo) > 0) {
                         } else {
                         ?>
                             <button class="btn btn-success" style="width: 35%;  font-size: 20px; " data-bs-toggle="modal" data-bs-target="#agendar" onclick="abrirModalAgendamento()">

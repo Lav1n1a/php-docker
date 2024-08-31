@@ -2,18 +2,21 @@
 
 include __DIR__ . '/../back/conexao.php';
 
-if (@$_POST['email'] && @$_POST['senha']) {
+if ($_POST['email'] && $_POST['senha']) {
 
-  $email =  $_POST['email'];
+  $email = pg_escape_string($conn, $_POST['email']);
   $senha = md5($_POST['senha']);
 
-  $sql = "SELECT * FROM `usuarios` WHERE email = '$email' AND senha = '$senha' limit 1";
+  // Prepare a consulta SQL
+  $sql = "SELECT * FROM usuarios WHERE email = '$email' AND senha = '$senha' LIMIT 1";
 
-  if ($dados = mysqli_query($conn, $sql)) {
-    $resultado = mysqli_fetch_assoc($dados);
+  // Execute a consulta
+  $result = pg_query($conn, $sql);
 
-    if (($email == $resultado['email']) and ($senha == $resultado['senha'])) {
+  if ($result) {
+    $resultado = pg_fetch_assoc($result);
 
+    if ($resultado) {
       session_start();
 
       $_SESSION['id'] = $resultado['id'];
@@ -21,18 +24,23 @@ if (@$_POST['email'] && @$_POST['senha']) {
       $_SESSION['perfil_id'] = $resultado['perfil_id'];
 
       header("Location: ./pages/home.php");
+      exit(); // Certifique-se de parar a execução após o redirecionamento
     } else {
-      echo "<script> 
-        alert('Este usuário não existe!')
+      echo "<script>
+        alert('Este usuário não existe!');
         window.location.href = 'login.php';
       </script>";
       unset($_POST);
       $_POST['email'] = '';
     }
   } else {
+    echo "<script>
+      alert('Erro na execução da consulta.');
+      window.location.href = 'login.php';
+    </script>";
     unset($_POST);
     $_POST['email'] = '';
-  };
+  }
 }
 ?>
 <!DOCTYPE html>
