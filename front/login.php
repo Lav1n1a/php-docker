@@ -20,7 +20,7 @@ if (@$_POST['email'] && @$_POST['senha']) {
       $_SESSION['email'] = $resultado['email'];
       $_SESSION['perfil_id'] = $resultado['perfil_id'];
 
-      header("Location: pages/home.php");
+      header("Location: ./pages/home.php");
     } else {
       echo "<script> 
         alert('Este usuário não existe!')
