@@ -9,7 +9,7 @@
 
         $especialidades = pg_query($conn, $queryEspecialidades);
 
-        while ($dadosEspecialidades = mysqli_fetch_assoc($especialidades)) {
+        while ($dadosEspecialidades = pg_fetch_assoc($especialidades)) {
         ?>
             <option value=<?php echo $dadosEspecialidades['id'] ?>><?php echo $dadosEspecialidades['nome'] ?></option>
         <?php
