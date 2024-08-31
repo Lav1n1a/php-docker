@@ -5,7 +5,9 @@
     <?php
     if ($perfilId == 2) {
     ?>
-        <button class="btn btn-success" style="width: 100px; margin: 7px 0px;" data-bs-toggle="modal" data-bs-target="#agendar" onclick="abrirModalAgendamento()"><i class="fas fa-plus"></i> Novo</button>
+        <button class="btn btn-success" style="width: 100px; margin: 7px 0px;" data-bs-toggle="modal" data-bs-target="#agendar" onclick="abrirModalAgendamento()">
+            <i class="fas fa-plus"></i> Novo
+        </button>
     <?php
     }
     ?>
@@ -14,33 +16,33 @@
     if ($perfilId == 1) {
     ?>
     <?php
-        $sqlRegistros = "SELECT a.id as id, a.id_usuario, DATE_FORMAT(a.data, '%d/%m/%Y') as data, a.hora as hora, e.nome, u.email as email, 
-                        s.nome as status, s.id as codigo_status
-                        FROM agendamentos a
-                        LEFT JOIN especialidades e ON e.id = a.especialidade
-                        LEFT JOIN usuarios u ON u.id = a.id_usuario
-                        LEFT JOIN status s ON s.id = a.status";
-    } else if ($perfilId == 2) {
+        $sqlRegistros = "SELECT a.id AS id, a.id_usuario, TO_CHAR(a.data, 'DD/MM/YYYY') AS data, a.hora AS hora, e.nome, u.email AS email, 
+                    s.nome AS status, s.id AS codigo_status
+                    FROM agendamentos a
+                    LEFT JOIN especialidades e ON e.id = a.especialidade
+                    LEFT JOIN usuarios u ON u.id = a.id_usuario
+                    LEFT JOIN status s ON s.id = a.status";
+    } elseif ($perfilId == 2) {
     ?>
     <?php
-        $sqlRegistros = "SELECT a.id as id, a.id_usuario, DATE_FORMAT(a.data, '%d/%m/%Y') as data, a.hora as hora, e.nome, u.email as email, 
-                        s.nome as status, s.id as codigo_status
-                        FROM agendamentos a
-                        LEFT JOIN especialidades e ON e.id = a.especialidade
-                        LEFT JOIN usuarios u ON u.id = a.id_usuario
-                        LEFT JOIN status s ON s.id = a.status
-                        WHERE a.id_usuario = $id and s.id = 1";
+        $sqlRegistros = "SELECT a.id AS id, a.id_usuario, TO_CHAR(a.data, 'DD/MM/YYYY') AS data, a.hora AS hora, e.nome, u.email AS email, 
+                    s.nome AS status, s.id AS codigo_status
+                    FROM agendamentos a
+                    LEFT JOIN especialidades e ON e.id = a.especialidade
+                    LEFT JOIN usuarios u ON u.id = a.id_usuario
+                    LEFT JOIN status s ON s.id = a.status
+                    WHERE a.id_usuario = $id AND s.id = 1";
     } else {
     ?>
     <?php
-        $sqlRegistros = "SELECT a.id AS id, a.email AS email, DATE_FORMAT(a.data, '%d/%m/%Y') as data, a.hora AS hora, e.nome AS nome, 
-                        s.id AS codigo_status,  s.nome as status
-                        FROM agendamentos a
-                        LEFT JOIN perfil_especialidade pe ON pe.id_especialidade = a.especialidade
-                        LEFT JOIN usuarios u ON u.id = a.id_usuario
-                        LEFT JOIN especialidades e ON e.id = a.especialidade
-                        LEFT JOIN status s ON s.id = a.status
-                        WHERE pe.id_perfil = $perfilId AND s.id != 3";
+        $sqlRegistros = "SELECT a.id AS id, a.email AS email, TO_CHAR(a.data, 'DD/MM/YYYY') AS data, a.hora AS hora, e.nome AS nome, 
+                    s.id AS codigo_status, s.nome AS status
+                    FROM agendamentos a
+                    LEFT JOIN perfil_especialidade pe ON pe.id_especialidade = a.especialidade
+                    LEFT JOIN usuarios u ON u.id = a.id_usuario
+                    LEFT JOIN especialidades e ON e.id = a.especialidade
+                    LEFT JOIN status s ON s.id = a.status
+                    WHERE pe.id_perfil = $perfilId AND s.id != 3";
     }
 
     $dadosRegistros = pg_query($conn, $sqlRegistros);
@@ -57,36 +59,31 @@
                         <th style="width: 10%;">HORÁRIO</th>
                         <th style="width: 15%;">ESPECIALIDADE</th>
                         <th style="width: 10%;">STATUS</th>
-                        <th style="width: 10%;">ACOES</th>
+                        <th style="width: 10%;">AÇÕES</th>
                     </tr>
                 </thead>
 
                 <tbody>
-
                     <?php
-
                     while ($dadosAgendamentos = pg_fetch_assoc($dadosRegistros)) {
                         $idAgendamento = $dadosAgendamentos['id'];
                         $statusColor = getStatusColor($dadosAgendamentos['codigo_status']);
-
-
                     ?>
                         <tr>
-
-                            <td style="text-align:center;"><?php echo $dadosAgendamentos['id']; ?></td>
-                            <td><?php echo $dadosAgendamentos['email']; ?></td>
-                            <td><?php echo $dadosAgendamentos['data']; ?></td>
-                            <td><?php echo $dadosAgendamentos['hora']; ?> </td>
-                            <td><?php echo $dadosAgendamentos['nome']; ?></td>
-                            <td><span style="color: <?php echo $statusColor; ?>;"> <?php echo $dadosAgendamentos['status']; ?></span></td>
+                            <td style="text-align:center;"><?php echo htmlspecialchars($dadosAgendamentos['id']); ?></td>
+                            <td><?php echo htmlspecialchars($dadosAgendamentos['email']); ?></td>
+                            <td><?php echo htmlspecialchars($dadosAgendamentos['data']); ?></td>
+                            <td><?php echo htmlspecialchars($dadosAgendamentos['hora']); ?></td>
+                            <td><?php echo htmlspecialchars($dadosAgendamentos['nome']); ?></td>
+                            <td><span style="color: <?php echo htmlspecialchars($statusColor); ?>;"> <?php echo htmlspecialchars($dadosAgendamentos['status']); ?></span></td>
                             <td>
                                 <?php if ($perfilId == 1) { ?>
-                                    <i title="Cancelar" class="fas fa-ban" style="cursor: pointer; margin: 0px 5px; " onclick="abrirAlert('<?php echo $idAgendamento; ?>', 'idCancelar')" data-bs-toggle="modal" data-bs-target="#cancelarAgendamento"></i>
-                                    <i title="Finalizar" class="fas fa-times" style="cursor: pointer; margin: 0px 5px;" onclick="abrirAlert('<?php echo $idAgendamento; ?>', 'idFinalizar')" data-bs-toggle="modal" data-bs-target="#finalizarAgendamento"></i>
+                                    <i title="Cancelar" class="fas fa-ban" style="cursor: pointer; margin: 0px 5px;" onclick="abrirAlert('<?php echo htmlspecialchars($idAgendamento); ?>', 'idCancelar')" data-bs-toggle="modal" data-bs-target="#cancelarAgendamento"></i>
+                                    <i title="Finalizar" class="fas fa-times" style="cursor: pointer; margin: 0px 5px;" onclick="abrirAlert('<?php echo htmlspecialchars($idAgendamento); ?>', 'idFinalizar')" data-bs-toggle="modal" data-bs-target="#finalizarAgendamento"></i>
                                 <?php } elseif ($perfilId == 2) { ?>
-                                    <i title="Cancelar" class="fas fa-ban" style="cursor: pointer; margin: 0px 5px;" onclick="abrirAlert('<?php echo $idAgendamento; ?>', 'idCancelar')" data-bs-toggle="modal" data-bs-target="#cancelarAgendamento"></i>
+                                    <i title="Cancelar" class="fas fa-ban" style="cursor: pointer; margin: 0px 5px;" onclick="abrirAlert('<?php echo htmlspecialchars($idAgendamento); ?>', 'idCancelar')" data-bs-toggle="modal" data-bs-target="#cancelarAgendamento"></i>
                                 <?php } else { ?>
-                                    <i title="Finalizar" class="fas fa-times" style="cursor: pointer; margin: 0px 5px;" onclick="abrirAlert('<?php echo $idAgendamento; ?>', 'idFinalizar')" data-bs-toggle="modal" data-bs-target="#finalizarAgendamento"></i>
+                                    <i title="Finalizar" class="fas fa-times" style="cursor: pointer; margin: 0px 5px;" onclick="abrirAlert('<?php echo htmlspecialchars($idAgendamento); ?>', 'idFinalizar')" data-bs-toggle="modal" data-bs-target="#finalizarAgendamento"></i>
                                 <?php } ?>
                             </td>
                         </tr>

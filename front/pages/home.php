@@ -3,7 +3,7 @@
 <div class="content-wrapper" style="padding: 15px;">
             <h1>Bem vindo!</h1>
             <?php
-            if ($perfilId == 2) {
+            if ($_SESSION['perfil_id'] == 2) {
                 //Perfil paciente
             ?>
 
@@ -76,7 +76,7 @@
                     </div>
                 </div>
             <?php
-            } else if ($perfilId != 1) {
+            } else if ($_SESSION['perfil_id'] != 1) {
                 //Qualquer perfil que não seja de paciente ou administrador
             ?>
                 <div class="card" id="cardEspecialista" style="width: 96%;">

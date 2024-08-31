@@ -14,18 +14,5 @@ if ($conn) {
 } else {
     echo "Falha na conexão: " . pg_last_error();
 }
-
-
-// $HOST = '3306'; 
-// $USER = 'root';
-// $PASSWORD = 'root'; 
-// $NAME = 'agenda';
-
-// $conn = new mysqli($HOST, $USER, $PASSWORD,$NAME);
-
-// if ($conn->connect_error) {
-//     die("Não foi possível conectar ao banco de dados: " . $conn->connect_error);
-// } 
-   
    
 ?>
