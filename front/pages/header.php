@@ -1,4 +1,6 @@
 <?php 
+session_start();
+
 include __DIR__ . '/../../back/conexao.php';
 include __DIR__ . '/../../back/validaSessao.php';
 

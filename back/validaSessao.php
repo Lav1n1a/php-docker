@@ -4,6 +4,6 @@ if (isset($_SESSION['id'])) {
     $email = $_SESSION['id'];
 } else {
     session_destroy();
-    header("location: ../../");
+    header("location: ../../front/home.php");
 }
 ?>
