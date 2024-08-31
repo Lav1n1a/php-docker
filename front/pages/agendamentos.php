@@ -1,4 +1,4 @@
-<?php include('includes/header.php') ?>
+<?php include('./header.php') ?>
 
 <div class="content-wrapper" style="padding: 15px;">
     <h2>Agendamentos </h2>
