@@ -17,6 +17,7 @@ if ($_POST['email'] && $_POST['senha']) {
     $resultado = pg_fetch_assoc($result);
 
     if ($resultado) {
+      
       session_start();
 
       $_SESSION['id'] = $resultado['id'];

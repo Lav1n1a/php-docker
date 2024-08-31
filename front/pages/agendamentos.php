@@ -126,7 +126,76 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form id="agendamentoForm" action="../../back/controller/agendamentoController.php?acao=agendar" method="post" style="padding: 20px;">
-                    <?php include('includes/agendarForm.php'); ?>
+                    <div>
+                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($id, ENT_QUOTES, 'UTF-8'); ?>">
+                        <input type="hidden" name="email" value="<?php echo htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?>">
+                        <p style="padding: 10px auto;"><b>Especialidade:</b></p>
+                        <select class="form-select" aria-label="Default select example" name="especialidade" id="especialidade" style="margin-bottom: 10px;">
+                            <option selected>Selecione uma especialidade...</option>
+                            <?php
+                            $queryEspecialidades = "SELECT * FROM especialidades";
+                            $especialidades = pg_query($conn, $queryEspecialidades);
+
+                            if ($especialidades) {
+                                while ($dadosEspecialidades = pg_fetch_assoc($especialidades)) {
+                            ?>
+                                    <option value="<?php echo htmlspecialchars($dadosEspecialidades['id'], ENT_QUOTES, 'UTF-8'); ?>">
+                                        <?php echo htmlspecialchars($dadosEspecialidades['nome'], ENT_QUOTES, 'UTF-8'); ?>
+                                    </option>
+                            <?php
+                                }
+                            } else {
+                                echo "<option value=''>Nenhuma especialidade encontrada</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div>
+                        <p><b>Dia:</b></p>
+                        <p><input class="form-control" id="data" type="date" name="data" /></p>
+
+                        <script>
+                            const inputDate = document.getElementById('data');
+
+                            inputDate.addEventListener('change', function() {
+                                const selectedDate = new Date(inputDate.value);
+                                const day = selectedDate.getDay();
+
+                                if (day === 0 || day === 6) { // Se for domingo (0) ou sábado (6)
+                                    alert("Por favor, selecione uma data de segunda a sexta-feira.");
+                                    inputDate.value = '';
+                                }
+                            });
+                        </script>
+                    </div>
+                    <div>
+                        <p><b>Horário:</b></p>
+                        <select class="form-select" name="hora" id="hora" style="margin-bottom: 10px;">
+                            <option>Selecione um horário...</option>
+                            <?php
+                            $queryHorarios = "SELECT * FROM horarios";
+                            $horarios = pg_query($conn, $queryHorarios);
+
+                            if ($horarios) {
+                                while ($dadosHorarios = pg_fetch_assoc($horarios)) {
+                            ?>
+                                    <option value="<?php echo htmlspecialchars($dadosHorarios['id'], ENT_QUOTES, 'UTF-8'); ?>">
+                                        <?php echo htmlspecialchars($dadosHorarios['hora'], ENT_QUOTES, 'UTF-8'); ?>
+                                    </option>
+                            <?php
+                                }
+                            } else {
+                                echo "<option value=''>Nenhum horário disponível</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-dark btn-block" style="background-color: black; border: 1px solid white;">Agendar</button>
+                        </div>
+                    </div>
+
                 </form>
             </div>
         </div>
@@ -178,4 +247,4 @@
     </div>
 </div>
 
-<?php include('./includes/footer.php') ?>
+<?php include('./footer.php') ?>
