@@ -9,9 +9,11 @@ $conn_str = "host=$HOST dbname=$NAME user=$USER password=$PASSWORD";
 // Estabelecendo a conexão
 $conn = pg_connect($conn_str);
 
-if (!$conn) {
+if ($conn) {
+    echo "Conexão estabelecida com sucesso!";
+} else {
     echo "Falha na conexão: " . pg_last_error();
-} 
+}
 pg_close($conn);
 
 // $HOST = '3306'; 
