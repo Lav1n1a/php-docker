@@ -7,10 +7,8 @@ if ($_POST['email'] && $_POST['senha']) {
   $email = pg_escape_string($conn, $_POST['email']);
   $senha = md5($_POST['senha']);
 
-  // Prepare a consulta SQL
   $sql = "SELECT * FROM usuarios WHERE email = '$email' AND senha = '$senha' LIMIT 1";
 
-  // Execute a consulta
   $result = pg_query($conn, $sql);
 
   if ($result) {
@@ -25,7 +23,7 @@ if ($_POST['email'] && $_POST['senha']) {
       $_SESSION['perfil_id'] = $resultado['perfil_id'];
 
       header("Location: ./pages/home.php");
-      exit(); // Certifique-se de parar a execução após o redirecionamento
+      exit(); 
     } else {
       echo "<script>
         alert('Este usuário não existe!');

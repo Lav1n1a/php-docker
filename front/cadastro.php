@@ -12,8 +12,6 @@ if ($acao == 'cadastrar') {
     $perfilId = 2;
 
     if ($_POST['senha'] && $_POST['email']) {
-
-        // Verifique se o email já está em uso
         $validaEmail = "SELECT * FROM usuarios WHERE email = '$email'";
 
         $result = pg_query($conn, $validaEmail);
@@ -24,7 +22,6 @@ if ($acao == 'cadastrar') {
                 window.location.href = 'cadastro.php';
             </script>";
         } else {
-            // Insira um novo usuário
             $sql = "INSERT INTO usuarios (email, senha, perfil_id) VALUES ('$email', '$senha', $perfilId)";
 
             if (pg_query($conn, $sql)) {

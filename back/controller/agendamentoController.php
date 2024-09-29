@@ -30,7 +30,6 @@ if ($acao == 'agendar') {
                 window.location.href = '../../front/pages/home.php';
                 </script>";
         } else {
-            // Caso horário esteja livre, insere no banco
             $sql = "INSERT INTO agendamentos (id_usuario, email, especialidade, data, hora, status) VALUES ($idUsuario, '$email', $idEspecialidade, '$data', '$hora', 1)";
             
             if (pg_query($conn, $sql)) {
