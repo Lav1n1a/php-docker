@@ -34,7 +34,7 @@
                             <td style="text-align:center;"><?php echo htmlspecialchars($especialista['email'], ENT_QUOTES, 'UTF-8'); ?></td>
                             <td style="text-align:center;"><?php echo htmlspecialchars($especialista['perfilNome'], ENT_QUOTES, 'UTF-8'); ?></td>
                             <td style="text-align:center;">
-                                <i class="fas fa-edit" onclick="abrirModalEspecialista('<?php echo $id; ?>', 'idEditar')" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#cadastraOuEditaEspecialista"></i>
+                                <i class="fas fa-edit" onclick="abrirModalEspecialista('<?php echo $id; ?>', '<?php echo $email; ?>', '<?php echo $perfil; ?>')" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#cadastraOuEditaEspecialista"></i>
                             </td>
                         </tr>
                     <?php
@@ -64,7 +64,7 @@
                 </div>
                 <form id="cadastraOuEditaEspecialistaForm" action="../../back/controller/especialistaController.php?acao=cadastraOuEditaEspecialista" method="post" style="padding: 20px;">
 
-                    <input type="hidden" name="id" id="idEditar" value="" readonly>
+                    <input type="hidden" name="id" id="id" value="" readonly>
 
                     <div class="input-group mb-3">
                         <input type="email" class="form-control" placeholder="Email" name="email" id="email">

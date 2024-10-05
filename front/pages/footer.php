@@ -8,8 +8,10 @@
     document.getElementById(modalId).value = id;
   }
 
-  function abrirModalEspecialista(id, modalId) {
-    document.getElementById(modalId).value = id;
+  function abrirModalEspecialista(id, email, perfil) {
+    document.getElementById('id').value = id;
+    document.getElementById('email').value = email;
+    document.getElementById('id_perfil').value = perfil;
   }
 
   function abrirAlert(id, modalId) {
