@@ -5,7 +5,7 @@
     <button class="btn btn-success" style="width: 100px; margin: 7px 0px;" data-bs-toggle="modal" data-bs-target="#cadastraOuEditaEspecialista" onclick="abrirModalEspecialista()"><i class="fas fa-plus"></i> Novo</button>
 
     <?php
-    $sqlEspecialistas = "SELECT u.id AS id, u.email AS email_especialista, p.nome AS perfil_nome, u.perfil_id as perfil_id
+    $sqlEspecialistas = "SELECT u.id AS id_especialista, u.email AS email_especialista, p.nome AS perfil_nome, u.perfil_id as perfil_id
                         FROM usuarios AS u
                         LEFT JOIN perfil p ON p.id = u.perfil_id
                         WHERE u.perfil_id != 2 AND u.perfil_id != 1
@@ -28,15 +28,16 @@
                 <tbody>
                     <?php
                     while ($especialista = pg_fetch_assoc($dadosEspecialistas)) {
-                        $idEspecialista = htmlspecialchars($especialista['id'], ENT_QUOTES, 'UTF-8');
+                        $idEspecialista = htmlspecialchars($especialista['id_especialista'], ENT_QUOTES, 'UTF-8');
+                        $emailEspecialista = htmlspecialchars($especialista['email_especialista'], ENT_QUOTES, 'UTF-8');
                         $perfilEspecialista = htmlspecialchars($especialista['perfil_id'], ENT_QUOTES, 'UTF-8');
                     ?>
                         <tr>
-                            <td style="text-align:center;"><?php echo htmlspecialchars($especialista['id'], ENT_QUOTES, 'UTF-8'); ?></td>
+                            <td style="text-align:center;"><?php echo htmlspecialchars($especialista['id_especialista'], ENT_QUOTES, 'UTF-8'); ?></td>
                             <td style="text-align:center;"><?php echo htmlspecialchars($especialista['email_especialista'], ENT_QUOTES, 'UTF-8'); ?></td>
                             <td style="text-align:center;"><?php echo htmlspecialchars($especialista['perfil_nome'], ENT_QUOTES, 'UTF-8'); ?></td>
                             <td style="text-align:center;">
-                                <i class="fas fa-edit" onclick="abrirModalEspecialista('<?php echo $idEspecialista; ?>', '<?php echo $email; ?>', '<?php echo $perfilEspecialista; ?>')" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#cadastraOuEditaEspecialista"></i>
+                                <i class="fas fa-edit" onclick="abrirModalEspecialista('<?php echo $idEspecialista; ?>', '<?php echo $emailEspecialista; ?>', '<?php echo $perfilEspecialista; ?>')" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#cadastraOuEditaEspecialista"></i>
                             </td>
                         </tr>
                     <?php
@@ -66,7 +67,7 @@
                 </div>
                 <form id="cadastraOuEditaEspecialistaForm" action="../../back/controller/especialistaController.php?acao=cadastraOuEditaEspecialista" method="post" style="padding: 20px;">
 
-                    <input type="hidden" name="id" id="id_usuario" value="" readonly>
+                    <input type="hidden" name="id" id="id_especialista" value="" readonly>
 
                     <div class="input-group mb-3">
                         <input type="email" class="form-control" placeholder="Email" name="email" id="email_especialista">
@@ -85,8 +86,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <select class="form-select" aria-label="Default select example" name="id_perfil" id="id_perfil" style="margin-bottom: 10px;">
-                            <option selected>Selecione um perfil</option>
+                        <select class="form-select" aria-label="Default select example" name="id_perfil" id="perfil_especialista" style="margin-bottom: 10px;">
                             <?php
                             $queryPerfilEspecialidades = "SELECT * from perfil
                             WHERE id != 1 AND id != 2";

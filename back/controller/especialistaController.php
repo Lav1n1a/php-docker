@@ -24,15 +24,35 @@ if ($acao == 'cadastraOuEditaEspecialista') {
         
         $id = (int)$_POST['id']; 
 
-        $sql = "UPDATE usuarios SET email='$email', senha='$senha', perfil_id=$perfilEspecialidade WHERE id = $id";
+        if($senha != ''){
 
-        if (pg_query($conn, $sql)) {
-            echo "<script> alert('Especialista editado com sucesso!');
-            window.location.href = '../../front/pages/especialistas.php';
-            </script>";
-            exit;
-        } else {
-            echo "Não foi possível editar: " . pg_last_error($conn);
+            $sql = "UPDATE usuarios SET email='$email', senha='$senha', perfil_id=$perfilEspecialidade WHERE id = $id";
+
+            if (pg_query($conn, $sql)) {
+                echo "<script> alert('Especialista editado com sucesso!');
+                window.location.href = '../../front/pages/especialistas.php';
+                </script>";
+                exit;
+            } else {
+                echo "Não foi possível editar: " . pg_last_error($conn);
+            }
+
+        }else {
+
+            $sql = "UPDATE usuarios SET email='$email', perfil_id=$perfilEspecialidade WHERE id = $id";
+
+            if (pg_query($conn, $sql)) {
+                echo "<script> alert('Especialista editado com sucesso!');
+                window.location.href = '../../front/pages/especialistas.php';
+                </script>";
+                exit;
+            } else {
+                echo "Não foi possível editar: " . pg_last_error($conn);
+            }
+
+
         }
+
+       
     }
 }

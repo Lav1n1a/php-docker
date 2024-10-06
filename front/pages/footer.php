@@ -9,15 +9,16 @@
   }
 
   function abrirModalEspecialista(id, email, perfil) {
-    document.getElementById('id_usuario').value = id;
-    document.getElementById('email_especialista').value = email;
-    document.getElementById('id_perfil').value = perfil;
+
+    document.getElementById('id_especialista').value = id ? id : '';
+    document.getElementById('email_especialista').value = email ? email : '';
+    document.getElementById('perfil_especialista').value = perfil ? perfil : '';
+
   }
 
   function abrirAlert(id, modalId) {
     document.getElementById(modalId).value = id;
   }
-
 </script>
 
 <script src="/front/AdminLTE-3.2.0/plugins/jquery/jquery.min.js"></script>
