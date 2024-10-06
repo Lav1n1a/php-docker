@@ -16,7 +16,7 @@
     if ($perfilId == 1) {
     ?>
     <?php
-        $sqlRegistros = "SELECT a.id AS id, a.id_usuario, TO_CHAR(a.data, 'DD/MM/YYYY') AS data, a.hora AS hora, e.nome, u.email AS email, 
+        $sqlRegistros = "SELECT a.id AS id, a.id_usuario, TO_CHAR(a.data, 'DD/MM/YYYY') AS data,   TO_CHAR(a.hora, 'HH24:MI') AS hora, e.nome, u.email AS email, 
                     s.nome AS status, s.id AS codigo_status
                     FROM agendamentos a
                     LEFT JOIN especialidades e ON e.id = a.especialidade
@@ -25,7 +25,7 @@
     } else if ($perfilId == 2) {
     ?>
     <?php
-        $sqlRegistros = "SELECT a.id AS id, a.id_usuario, TO_CHAR(a.data, 'DD/MM/YYYY') AS data, a.hora AS hora, e.nome, u.email AS email, 
+        $sqlRegistros = "SELECT a.id AS id, a.id_usuario, TO_CHAR(a.data, 'DD/MM/YYYY') AS data,   TO_CHAR(a.hora, 'HH24:MI') AS hora, e.nome, u.email AS email, 
                     s.nome AS status, s.id AS codigo_status
                     FROM agendamentos a
                     LEFT JOIN especialidades e ON e.id = a.especialidade
@@ -35,7 +35,7 @@
     } else {
     ?>
     <?php
-        $sqlRegistros = "SELECT a.id AS id, a.email AS email, TO_CHAR(a.data, 'DD/MM/YYYY') AS data, a.hora AS hora, e.nome AS nome, 
+        $sqlRegistros = "SELECT a.id AS id, a.email AS email, TO_CHAR(a.data, 'DD/MM/YYYY') AS data,   TO_CHAR(a.hora, 'HH24:MI') AS hora, e.nome AS nome, 
                     s.id AS codigo_status, s.nome AS status
                     FROM agendamentos a
                     LEFT JOIN perfil_especialidade pe ON pe.id_especialidade = a.especialidade

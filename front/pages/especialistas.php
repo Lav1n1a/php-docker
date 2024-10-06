@@ -5,10 +5,10 @@
     <button class="btn btn-success" style="width: 100px; margin: 7px 0px;" data-bs-toggle="modal" data-bs-target="#cadastraOuEditaEspecialista" onclick="abrirModalEspecialista()"><i class="fas fa-plus"></i> Novo</button>
 
     <?php
-    $sqlEspecialistas = "SELECT u.id AS id, u.email AS email, u.id AS idUsuario, p.nome AS perfilNome
-  FROM usuarios AS u
-  LEFT JOIN perfil p ON p.id = u.perfil_id
-  WHERE u.perfil_id != 2 AND u.perfil_id != 1";
+    $sqlEspecialistas = "SELECT u.id AS id, u.email AS email, p.nome AS perfil_nome
+                        FROM usuarios AS u
+                        LEFT JOIN perfil p ON p.id = u.perfil_id
+                        WHERE u.perfil_id != 2 AND u.perfil_id != 1";
 
     $dadosEspecialistas = pg_query($conn, $sqlEspecialistas);
 
@@ -27,12 +27,12 @@
                 <tbody>
                     <?php
                     while ($especialista = pg_fetch_assoc($dadosEspecialistas)) {
-                        $id = htmlspecialchars($especialista['idUsuario'], ENT_QUOTES, 'UTF-8');
+                        $id = htmlspecialchars($especialista['id'], ENT_QUOTES, 'UTF-8');
                     ?>
                         <tr>
                             <td style="text-align:center;"><?php echo htmlspecialchars($especialista['id'], ENT_QUOTES, 'UTF-8'); ?></td>
                             <td style="text-align:center;"><?php echo htmlspecialchars($especialista['email'], ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td style="text-align:center;"><?php echo htmlspecialchars($especialista['perfilNome'], ENT_QUOTES, 'UTF-8'); ?></td>
+                            <td style="text-align:center;"><?php echo htmlspecialchars($especialista['perfil_nome'], ENT_QUOTES, 'UTF-8'); ?></td>
                             <td style="text-align:center;">
                                 <i class="fas fa-edit" onclick="abrirModalEspecialista('<?php echo $id; ?>', '<?php echo $email; ?>', '<?php echo $perfil; ?>')" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#cadastraOuEditaEspecialista"></i>
                             </td>
@@ -64,7 +64,7 @@
                 </div>
                 <form id="cadastraOuEditaEspecialistaForm" action="../../back/controller/especialistaController.php?acao=cadastraOuEditaEspecialista" method="post" style="padding: 20px;">
 
-                    <input type="hidden" name="id" id="id" value="" readonly>
+                    <input type="hidden" name="id" id="id_usuario" value="" readonly>
 
                     <div class="input-group mb-3">
                         <input type="email" class="form-control" placeholder="Email" name="email" id="email">
