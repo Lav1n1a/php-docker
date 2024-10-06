@@ -10,7 +10,7 @@
 
   function abrirModalEspecialista(id, email, perfil) {
     document.getElementById('id_usuario').value = id;
-    document.getElementById('email').value = email;
+    document.getElementById('email_especialista').value = email;
     document.getElementById('id_perfil').value = perfil;
   }
 

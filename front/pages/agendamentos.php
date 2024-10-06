@@ -21,7 +21,9 @@
                     FROM agendamentos a
                     LEFT JOIN especialidades e ON e.id = a.especialidade
                     LEFT JOIN usuarios u ON u.id = a.id_usuario
-                    LEFT JOIN status s ON s.id = a.status";
+                    LEFT JOIN status s ON s.id = a.status
+                    order by a.id DESC";
+                    
     } else if ($perfilId == 2) {
     ?>
     <?php
@@ -31,7 +33,8 @@
                     LEFT JOIN especialidades e ON e.id = a.especialidade
                     LEFT JOIN usuarios u ON u.id = a.id_usuario
                     LEFT JOIN status s ON s.id = a.status
-                    WHERE a.id_usuario = $id AND s.id = 1";
+                    WHERE a.id_usuario = $id AND s.id = 1
+                    order by a.id DESC";
     } else {
     ?>
     <?php
@@ -42,7 +45,8 @@
                     LEFT JOIN usuarios u ON u.id = a.id_usuario
                     LEFT JOIN especialidades e ON e.id = a.especialidade
                     LEFT JOIN status s ON s.id = a.status
-                    WHERE pe.id_perfil = $perfilId AND s.id != 3";
+                    WHERE pe.id_perfil = $perfilId AND s.id != 3
+                    order by a.id DESC";
     }
 
     $dadosRegistros = pg_query($conn, $sqlRegistros);
