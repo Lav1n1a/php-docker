@@ -27,7 +27,7 @@ include __DIR__ . '/../../back/validaSessao.php';
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
       </ul>
-      <a type="button" class="btn btn-danger" href="/front/logout.php" style="margin: 4px 10px 0px 0pX">Deslogar</a>
+      <a type="button" class="btn btn-danger" href="/front/logout.php" style="margin: 4px 10px 0px 0pX">Sair</a>
     </nav>
     <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: black;" style="height: 100%;">
       <a class="brand-link" style="text-decoration: none; padding-left: 25px;">

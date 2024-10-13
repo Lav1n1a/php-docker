@@ -27,7 +27,7 @@ if ($acao == 'cadastrar') {
             if (pg_query($conn, $sql)) {
                 echo "<script>
                     alert('Usuário criado com sucesso!');
-                    window.location.href = 'cadastro.php';
+                    window.location.href = 'login.php';
                 </script>";
             } else {
                 echo "Erro ao cadastrar usuário: " . pg_last_error($conn);
